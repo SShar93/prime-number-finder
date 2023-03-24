@@ -4,27 +4,19 @@ import com.find.primenumber.model.PrimeNumberResult;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class PrimeNumberService {
 
     public PrimeNumberResult findPrimeNumber(int number){
-        ArrayList<Integer> primes = new ArrayList<>();
-        for(int i = 0 ; i <=number ; i++){
-            if(checkPrime(i)){
-                primes.add(i);
-            }
-        }
-    return PrimeNumberResult.builder().intial(number).primes(primes).build();
+        return PrimeNumberResult.builder()
+            .intial(number)
+            .primes(IntStream.rangeClosed(2,number).filter(this::checkPrime).boxed().collect(Collectors.toList())).build();
     }
 
     private boolean checkPrime(int i) {
-        if(i <= 1)
-            return false;
-        for(int k = 2 ; k < i ; k++){
-            if(i%k == 0)
-                return false;
-        }
-        return  true;
+        return IntStream.rangeClosed(2, (int) Math.sqrt(i)).allMatch(x-> i % x != 0);
     }
 }

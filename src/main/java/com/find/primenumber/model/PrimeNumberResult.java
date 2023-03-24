@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Builder
@@ -15,5 +16,5 @@ public class PrimeNumberResult {
     private int intial;
 
     @JsonProperty("Primes")
-    private ArrayList<Integer> primes;
+    private List<Integer> primes;
 }
